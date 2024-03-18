@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -7,9 +8,8 @@ const Header = () => {
         <h1 className="text-2xl font-bold">My E-Commerce Store</h1>
         <nav>
           <ul className="flex space-x-4">
-            <li><a href="/" className="hover:text-gray-300">Home</a></li>
-            <li><a href="/products" className="hover:text-gray-300">Products</a></li>
-            <li><a href="/about" className="hover:text-gray-300">About</a></li>
+            <li><NavLink exact to="/"  className="hover:text-gray-300">Home</NavLink></li>
+            <li><NavLink to="/products" className="hover:text-gray-300">Products</NavLink></li>
           </ul>
         </nav>
       </div>

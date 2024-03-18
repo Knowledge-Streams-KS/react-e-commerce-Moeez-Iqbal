@@ -1,27 +1,34 @@
-// pages/ProductsPage.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { NavLink, useParams } from 'react-router-dom';
 
-const ProductsPage = () => {
+const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const { categoryName } = useParams();
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get('https://fakestoreapi.com/products');
-        setProducts(response.data);
+        let resp;
+        if (categoryName) {
+          resp = await axios.get(`https://fakestoreapi.com/products/category/${categoryName}`);
+        } else {
+          resp = await axios.get("https://fakestoreapi.com/products");
+        }
+        setProducts(resp.data);
         setLoading(false);
-      } catch (error) {
-        console.error('Error fetching products:', error);
+      } catch (e) {
+        console.log("ERROR: ", e);
+        setLoading(false);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [categoryName]);
 
   useEffect(() => {
     setFilteredProducts(
@@ -70,7 +77,9 @@ const ProductsPage = () => {
               <h3 className="font-bold text-lg">{product.title}</h3>
               <p className="text-gray-500 mb-2">Price: ${product.price}</p>
               <img src={product.image} alt={product.title} className="w-full h-auto mb-2" />
-              <p>{product.description}</p>
+              <NavLink to={`/product-details/${product.id}`}>
+                {product.title}
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -79,4 +88,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default Products;
