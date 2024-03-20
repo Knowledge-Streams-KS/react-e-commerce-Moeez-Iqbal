@@ -10,6 +10,7 @@ const Header = () => {
           <ul className="flex space-x-4">
             <li><NavLink exact to="/"  className="hover:text-gray-300">Home</NavLink></li>
             <li><NavLink to="/products" className="hover:text-gray-300">Products</NavLink></li>
+            <li><NavLink to="/categories" className="hover:text-gray-300">Categories</NavLink></li>
           </ul>
         </nav>
       </div>
